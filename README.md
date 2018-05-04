@@ -1,14 +1,11 @@
 # Objetos Inteligentes Conectados 1 sem. 2018
 
-## Turma XXX
-## Projeto: "nome do projeto"
+## Turma 5k12
+## Projeto: "Semáforo com prevenção de acidentes"
 ## Integrantes do grupo:
 
-* Aluno 1
-* Aluno 2
-* Aluno 3
-* Aluno 4
-* Aluno 5
+* Rafael Kacuta 
+* Felipe Macena Galhardo
 _______________________________________
 Obs:
 
