@@ -1,5 +1,8 @@
-#include <Ultrasonic.h>
+#include <Blynk.h>
+#include <BlynkSimpleStream.h>
 
+
+#include <Ultrasonic.h>
 
 //Define os pinos para o trigger e echo
 #define pino_trigger 2
@@ -28,6 +31,7 @@ void loop()
   //Le as informacoes do sensor, em cm e pol
   float cmMsec, inMsec;
   long microsec;
+  int contbranca=0;
  
   //inMsec = ultrasonic.convert(microsec, Ultrasonic::IN);
   digitalWrite(6,LOW);
@@ -43,9 +47,18 @@ void loop()
   Serial.println(cmMsec);
   if (cmMsec<=10){
     digitalWrite(6,HIGH);
-    delay(6000);
-    //digitalWrite(7, LOW);
-    //digitalWrite(8, HIGH);
+    contbranca+=1;
+    delay(1000);
+    for (i=0;i<=5;i++){
+      digitalWrite(6,LOW);
+      microsec = ultrasonic.timing();
+      cmMsec = ultrasonic.convert(microsec, Ultrasonic::CM);
+      if (cMsec<=10){
+        contbranca+=1;
+        delay(1000);
+        digitalWrite(6,HIGH);
+      }
+    }
     break;
   }else{
     cont+=1;
@@ -66,9 +79,19 @@ void loop()
     if (cmMsec<=10){
       digitalWrite(6,HIGH);
       delay(1000);
+      contbranca+=1;
       digitalWrite(8, LOW);
       digitalWrite(10, HIGH);
-      delay(2000);
+      for (i=0;i<=2;i++){
+        digitalWrite(6,LOW);
+        microsec = ultrasonic.timing();
+        cmMsec = ultrasonic.convert(microsec, Ultrasonic::CM);
+        if (cMsec<=10){
+          contbranca+=1;
+          delay(1000);
+          digitalWrite(6,HIGH);
+        }
+    }
     break;
   }else{
     cont+=1;
@@ -82,6 +105,7 @@ void loop()
     digitalWrite(6,HIGH);
     Serial.print("Distancia em cm fase 3: ");
     Serial.println(cmMsec);
+    contbranca+=1;
   }
   digitalWrite(8, LOW);
   digitalWrite(13, LOW);
@@ -95,17 +119,13 @@ void loop()
     digitalWrite(6,HIGH);
     Serial.print("Distancia em cm fase 4: ");
     Serial.println(cmMsec);
+    contbranca+=1;
   } 
   digitalWrite(11, LOW); 
   digitalWrite(12, HIGH);
   delay(2000);
-  // Invert state, since button is "Active LOW"
-int isButtonPressed = !digitalRead(2);
-if (isButtonPressed) {
-BLYNK_LOG("Button is pressed.");
-
-Blynk.email("my_email@example.com", "Title", "Body");
-}
-//codigo do botao
+  if (contbranca>=4){
+    Serial.println(contbranca);
+  }
 }
 
